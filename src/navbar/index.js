@@ -21,6 +21,16 @@ const Navbar = () => {
                 Dashboard <div></div>{" "}
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/upload"
+                exact
+                className="nav-link"
+                activeClassName="active"
+              >
+                Upload <div></div>{" "}
+              </NavLink>
+            </li>
           </ul>
         </div>
       </div>
