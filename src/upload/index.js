@@ -24,7 +24,7 @@ export default function VideoInput(props) {
         data
     }
     axios.request(options).then((data)=>{
-        console.log(data)
+        console.log(data.data)
     }).catch((err)=>{
         console.log(err)
     })
