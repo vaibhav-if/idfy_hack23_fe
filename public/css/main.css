@@ -12,25 +12,72 @@ li {
   margin-top: 10px;
 }
 
-
 .card {
   /* Add shadows to create the "card" effect */
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
+  width: 175px;
+  padding: 1rem;
+  background-color: #cfebf7;
+  font-size: 24px;
+  cursor: pointer;
 }
+
+
 
 /* On mouse-over, add a deeper shadow */
 .card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
-.mt50{
-  margin-top: 5rem;
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
-.align-center{
+.font-bold {
+  font-weight: 500;
+}
+
+.flex-clmn {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  gap:20px;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  gap: 1rem;
+}
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
   text-align: center;
-  
+}
+.gap2 {
+  gap: 1rem;
+}
+
+.m2 {
+  margin: 1rem;
+}
+
+.mt2 {
+  margin-top: 2rem;
+}
+
+.align-center {
+  text-align: center;
+}
+.font-size {
+  font-size: 24px;
 }
 
 header.header {
