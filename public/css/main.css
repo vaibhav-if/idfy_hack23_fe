@@ -16,7 +16,8 @@ li {
   /* Add shadows to create the "card" effect */
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  width: 175px;
+  width: 185px;
+  height: 100px;
   padding: 1rem;
   background-color: #cfebf7;
   font-size: 24px;
@@ -47,6 +48,13 @@ li {
   gap: 2rem;
 }
 
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
 .flex-row {
   display: flex;
   flex-direction: row;
@@ -54,7 +62,7 @@ li {
 }
 .grid-container {
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: auto auto;
   gap: 1rem;
 }
 .grid-item {
@@ -64,7 +72,9 @@ li {
 .gap2 {
   gap: 1rem;
 }
-
+.gap10{
+  gap:10px;
+}
 .m2 {
   margin: 1rem;
 }
@@ -135,6 +145,44 @@ header.header {
   align-items: center;
   justify-content: space-between;
   padding: 0.4rem 1.6rem;
+}
+
+.rectangle-red{
+  height: 30px;
+  width: 60px;
+  background-color: #e50c3b;
+}
+.rectangle-blue {
+  height: 30px;
+  width: 60px;
+  background-color: #36A2EB;
+}
+.rectangle-yellow {
+  height: 30px;
+  width: 60px;
+  background-color: #FFCE56;
+}
+
+.rectangle-green {
+  height: 30px;
+  width: 60px;
+  background-color: #41db62;
+}
+
+.rectangle-pink {
+  height: 30px;
+  width: 60px;
+  background-color: #df2ab8;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.flex-row-center{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap:10px;
 }
 
 @media all and (-ms-high-contrast: none) {
