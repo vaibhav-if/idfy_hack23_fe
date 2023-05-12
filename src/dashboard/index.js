@@ -5,21 +5,64 @@ import { PieChart, Pie, Cell , Tooltip} from "recharts";
 const VIDEO_STATS_URL = "http://127.0.0.1:5000/video_stats";
 const Dashboard = () => {
   const [statsData, setStatsData] = useState({});
-  const chartData = [
-    { name: "1", value: 300, color: "red", code: "#e50c3b" },
-    { name: "2", value: 50, color: "blue", code: "#36A2EB" },
-    { name: "3", value: 100, color: "green", code: "#41db62" },
-    { name: "4", value: 100, color: "pink",code: "#df2ab8" },
-    { name: "5", value: 100, color: "yellow",code: "#FFCE56" },
+  const chartDataInitial = [
+    { name: "1", value: 0, color: "red", code: "#e50c3b" },
+    { name: "2", value: 0, color: "blue", code: "#36A2EB" },
+    { name: "3", value: 0, color: "green", code: "#41db62" },
+    { name: "4", value: 0, color: "pink",code: "#df2ab8" },
+    { name: "5", value: 0, color: "yellow",code: "#FFCE56" },
   ];
-  const chartDataRes = [
-    { name: "240", value: 100, color: "green", code: "#41db62" },
-    { name: "360", value: 300, color: "red", code: "#e50c3b" },
-    { name: "480", value: 100, color: "pink",code: "#df2ab8" },
-    { name: "720", value: 100, color: "yellow",code: "#FFCE56" },
-    { name: "1080", value: 50, color: "blue", code: "#36A2EB" },
+  const chartDataResInitial = [
+    { name: "240", value: 0, color: "green", code: "#41db62" },
+    { name: "360", value: 0, color: "red", code: "#e50c3b" },
+    { name: "480", value: 0, color: "pink",code: "#df2ab8" },
+    { name: "720", value: 0, color: "yellow",code: "#FFCE56" },
+    { name: "1080", value: 0, color: "blue", code: "#36A2EB" },
     
   ];
+  const [chartData, setChartData] = useState(chartDataInitial)
+  const [chartDataRes, setChartDataRes] = useState(chartDataResInitial)
+
+  const setData = (data) =>{
+    let score = data?.video_quality_group;
+    let resolution = data?.resolution_group;
+    let new_score = [];
+    let new_resolution = [];
+    if(score){
+      let res = {}
+      let total = 0;
+      score.map((item)=>{
+        res[item[0]] = item[1];
+        total += item[1];
+      })
+      new_score = chartData.map((item)=>{
+        console.log(res[item.name])
+        if(res[item.name]) {
+          item.value = Math.round(res[item.name]*100)/total || 0;
+        }
+        return item
+      })
+    }
+
+    if(resolution){
+      let res = {}
+      let total = 0;
+      resolution.map((item)=>{
+        res[item[0]] = item[1];
+        total += item[1];
+      })
+      new_resolution = chartDataRes.map((item)=>{
+        if(res[item.name]) {
+          item.value = Math.round(res[item.name]*100)/total || 0;
+        }
+        return item
+      })
+    }
+    setStatsData(data)
+    setChartData(new_score)
+    setChartDataRes(new_resolution)
+  }
+
   const getStats = () => {
     let options = {
       url: VIDEO_STATS_URL,
@@ -32,7 +75,7 @@ const Dashboard = () => {
       .request(options)
       .then((data) => {
         console.log(data.data);
-        setStatsData(data.data);
+        setData(data.data);
       })
       .catch((err) => {
         console.log(err);
