@@ -37,7 +37,6 @@ const Dashboard = () => {
         total += item[1];
       });
       new_score = chartData.map((item) => {
-        console.log(res[item.name]);
         if (res[item.name]) {
           item.value = Math.round(res[item.name] * 100) / total || 0;
         }
@@ -76,7 +75,6 @@ const Dashboard = () => {
     axios
       .request(options)
       .then((data) => {
-        console.log(data.data);
         setData(data.data);
       })
       .catch((err) => {
@@ -87,7 +85,6 @@ const Dashboard = () => {
 
   const getColors = (props) => {
     if (props.key == "multiple_faces_percentage") {
-      console.log(props, "prif");
       if (Number(statsData?.[props.key]) < 10) return "success";
       return "alert";
     }
