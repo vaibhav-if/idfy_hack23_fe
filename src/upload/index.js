@@ -49,7 +49,7 @@ export default function VideoInput(props) {
           multiple={false}
           type="file"
           onChange={handleFileChange}
-          accept=".mov,.mp4,.webm"
+          accept=".mov,.mp4,.webm,.mkv,.3gp"
         />
       </div>
       {loader && <Loader/>}
