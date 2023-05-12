@@ -6,9 +6,13 @@ const Navbar = () => {
   return (
     <header className="header sticky-header">
       <div className="top">
-        <Link to="/" className="image">
+        {/* <div>
           <img src="/images/idfy-logo.svg" alt="Idfy Logo" />
-        </Link>
+        </div> */}
+        <div className="flex-row-center font-bold font-size">
+          <img src="/images/virtual-reality.png" width="40px" height="40px" alt="Idfy Logo" />
+          <span>OptimEye</span>
+        </div>
         <div className="d-flex gap-1">
           <ul className="header-nav">
             <li>
