@@ -16,9 +16,9 @@ li {
   /* Add shadows to create the "card" effect */
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  width: 185px;
+  width: 200px;
   height: 100px;
-  padding: 1rem;
+  padding: 1.5rem;
   background-color: #cfebf7;
   font-size: 24px;
   cursor: pointer;
@@ -83,8 +83,13 @@ li {
   margin-top: 2rem;
 }
 
+.mt50 {
+  margin-top: 5rem;
+}
+
 .align-center {
   text-align: center;
+  font-size: larger;
 }
 .font-size {
   font-size: 24px;
