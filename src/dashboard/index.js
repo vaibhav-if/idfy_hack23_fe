@@ -24,7 +24,13 @@ const Dashboard = () => {
   useEffect(()=>{
     getStats()
   },[])
-  return <div>Dashboard</div>;
+  return(
+    <div className="mt10">
+      <div className="card">
+          <p>Total calls compaleted</p>
+      </div>
+    </div>
+  )
 };
 
 export default Dashboard;
