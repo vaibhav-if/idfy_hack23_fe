@@ -1,5 +1,7 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Loader from "../loader";
 
 const UPLOAD_VIDEO_URL = "http://127.0.0.1:5000/process_video";
 
@@ -8,7 +10,8 @@ export default function VideoInput(props) {
 
   const inputRef = React.useRef();
 
-  const [source, setSource] = React.useState();
+  const [loader, setLoader] = useState(false);
+  const navigate = useNavigate()
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -23,14 +26,17 @@ export default function VideoInput(props) {
         },
         data
     }
+    setLoader(true)
     axios.request(options).then((data)=>{
         console.log(data.data)
+        setLoader(false)
+        navigate("/dashboard")
     }).catch((err)=>{
         console.log(err)
+        setLoader(false)
+        alert(err.message)
     })
-    const url = URL.createObjectURL(file);
-    setSource(url);
-    console.log(url)
+    
   };
 
   return (
@@ -48,6 +54,7 @@ export default function VideoInput(props) {
           accept=".mov,.mp4,.webm"
         />
       </div>
+      {loader && <Loader/>}
     </div>
   );
 }

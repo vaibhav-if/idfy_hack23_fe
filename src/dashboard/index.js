@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { PieChart, Pie, Cell , Tooltip} from "recharts";
+import { PieChart, Pie, Cell, Tooltip } from "recharts";
+import Loader from "../loader";
 
 const VIDEO_STATS_URL = "http://127.0.0.1:5000/video_stats";
 const Dashboard = () => {
@@ -9,59 +10,59 @@ const Dashboard = () => {
     { name: "1", value: 0, color: "red", code: "#e50c3b" },
     { name: "2", value: 0, color: "blue", code: "#36A2EB" },
     { name: "3", value: 0, color: "green", code: "#41db62" },
-    { name: "4", value: 0, color: "pink",code: "#df2ab8" },
-    { name: "5", value: 0, color: "yellow",code: "#FFCE56" },
+    { name: "4", value: 0, color: "pink", code: "#df2ab8" },
+    { name: "5", value: 0, color: "yellow", code: "#FFCE56" },
   ];
   const chartDataResInitial = [
     { name: "240", value: 0, color: "green", code: "#41db62" },
     { name: "360", value: 0, color: "red", code: "#e50c3b" },
-    { name: "480", value: 0, color: "pink",code: "#df2ab8" },
-    { name: "720", value: 0, color: "yellow",code: "#FFCE56" },
+    { name: "480", value: 0, color: "pink", code: "#df2ab8" },
+    { name: "720", value: 0, color: "yellow", code: "#FFCE56" },
     { name: "1080", value: 0, color: "blue", code: "#36A2EB" },
-    
   ];
-  const [chartData, setChartData] = useState(chartDataInitial)
-  const [chartDataRes, setChartDataRes] = useState(chartDataResInitial)
+  const [chartData, setChartData] = useState(chartDataInitial);
+  const [chartDataRes, setChartDataRes] = useState(chartDataResInitial);
+  const [loader, setLoader] = useState(false);
 
-  const setData = (data) =>{
+  const setData = (data) => {
     let score = data?.video_quality_group;
     let resolution = data?.resolution_group;
     let new_score = [];
     let new_resolution = [];
-    if(score){
-      let res = {}
+    if (score) {
+      let res = {};
       let total = 0;
-      score.map((item)=>{
+      score.map((item) => {
         res[item[0]] = item[1];
         total += item[1];
-      })
-      new_score = chartData.map((item)=>{
-        console.log(res[item.name])
-        if(res[item.name]) {
-          item.value = Math.round(res[item.name]*100)/total || 0;
+      });
+      new_score = chartData.map((item) => {
+        console.log(res[item.name]);
+        if (res[item.name]) {
+          item.value = Math.round(res[item.name] * 100) / total || 0;
         }
-        return item
-      })
+        return item;
+      });
     }
 
-    if(resolution){
-      let res = {}
+    if (resolution) {
+      let res = {};
       let total = 0;
-      resolution.map((item)=>{
+      resolution.map((item) => {
         res[item[0]] = item[1];
         total += item[1];
-      })
-      new_resolution = chartDataRes.map((item)=>{
-        if(res[item.name]) {
-          item.value = Math.round(res[item.name]*100)/total || 0;
+      });
+      new_resolution = chartDataRes.map((item) => {
+        if (res[item.name]) {
+          item.value = Math.round(res[item.name] * 100) / total || 0;
         }
-        return item
-      })
+        return item;
+      });
     }
-    setStatsData(data)
-    setChartData(new_score)
-    setChartDataRes(new_resolution)
-  }
+    setStatsData(data);
+    setChartData(new_score);
+    setChartDataRes(new_resolution);
+  };
 
   const getStats = () => {
     let options = {
@@ -71,6 +72,7 @@ const Dashboard = () => {
       //   'Content-Type': 'application/json'
       // },
     };
+    setLoader(true);
     axios
       .request(options)
       .then((data) => {
@@ -80,6 +82,16 @@ const Dashboard = () => {
       .catch((err) => {
         console.log(err);
       });
+    setLoader(false);
+  };
+
+  const getColors = (props) => {
+    if (props.key == "multiple_faces_percentage") {
+      console.log(props, "prif");
+      if (Number(statsData?.[props.key]) < 10) return "success";
+      return "alert";
+    }
+    return "";
   };
 
   useEffect(() => {
@@ -89,7 +101,8 @@ const Dashboard = () => {
     return (
       <div className="card flex-column" title={props.title || props.name}>
         <span className="font-bold">{props.name}</span>
-        <span>
+
+        <span className={`${getColors(props)}`}>
           {statsData[props.key]
             ? Number(statsData?.[props.key]).toFixed(2)
             : "N/A"}
@@ -99,7 +112,7 @@ const Dashboard = () => {
     );
   };
 
-  const  colors = ["redish","blue","yellow"]
+  const colors = ["redish", "blue", "yellow"];
 
   let stats = [
     {
@@ -107,6 +120,27 @@ const Dashboard = () => {
       value: 0,
       name: "Total Completed Calls",
       key: "total_completed_calls",
+    },
+    {
+      title: "",
+      value: 0,
+      name: "Multiple face Detection",
+      extention: "%",
+      key: "multiple_faces_percentage",
+    },
+    {
+      title: "",
+      value: 0,
+      name: "Average Bit Rate",
+      extention: "Mbps",
+      key: "average_bit_rate",
+    },
+    {
+      title: "",
+      value: 0,
+      name: "Average Frame Rate",
+      extention: "fps",
+      key: "average_frame_rate",
     },
     {
       title: "",
@@ -130,31 +164,10 @@ const Dashboard = () => {
       key: "flatness",
     },
     { title: "", value: 0, name: "P90 PSNR", extention: "", key: "psnr" },
-    {
-      title: "",
-      value: 0,
-      name: "Multiple face Detection",
-      extention: "%",
-      key: "multiple_faces_percentage",
-    },
-    {
-      title: "",
-      value: 0,
-      name: "Average Bit Rate",
-      extention: "Mbps",
-      key: "average_bit_rate",
-    },
-    {
-      title: "",
-      value: 0,
-      name: "Average Frame Rate",
-      extention: "fps",
-      key: "average_frame_rate",
-    },
   ];
   return (
     <div className="m1 mt2 container">
-
+      {loader && <Loader />}
       <div className="grid-container">
         {stats.map((item) => {
           return (
@@ -182,25 +195,22 @@ const Dashboard = () => {
                   className="cursor-pointer"
                 >
                   {chartData.map((item, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={item.code}
-                    />
+                    <Cell key={`cell-${index}`} fill={item.code} />
                   ))}
                 </Pie>
-                <Tooltip/>
+                <Tooltip />
               </PieChart>
             </span>
           </div>
           <div className="gap10">
             <span>Score</span>
-            {chartData.map((item,idx)=>{
-              return(
+            {chartData.map((item, idx) => {
+              return (
                 <div key={idx} className="flex-row-center mt10">
                   <span className={`rectangle-${item.color}`}></span>
                   <span>{item.name}</span>
                 </div>
-              )
+              );
             })}
           </div>
         </div>
@@ -220,25 +230,22 @@ const Dashboard = () => {
                   className="cursor-pointer"
                 >
                   {chartDataRes.map((item, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={item.code}
-                    />
+                    <Cell key={`cell-${index}`} fill={item.code} />
                   ))}
                 </Pie>
-                <Tooltip/>
+                <Tooltip />
               </PieChart>
             </span>
           </div>
           <div className="gap10">
             <span>Resolutions</span>
-            {chartDataRes.map((item,idx)=>{
-              return(
+            {chartDataRes.map((item, idx) => {
+              return (
                 <div key={idx} className="flex-row-center mt10">
                   <span className={`rectangle-${item.color}`}></span>
                   <span>{item.name}p</span>
                 </div>
-              )
+              );
             })}
           </div>
         </div>

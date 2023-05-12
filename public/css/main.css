@@ -185,6 +185,57 @@ header.header {
   gap:10px;
 }
 
+.loader-container {
+  background: rgba(179, 173, 173, 0.3);
+  z-index: 99;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.loader-container span {
+  font-size: 1.2rem;
+  margin: 1rem 0;
+}
+
+.loader {
+  border: 1rem solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 1rem solid #3498db;
+  width: 6rem;
+  height: 6rem;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+
+}
+
+.success {
+  color:#41db62;
+}
+.alert {
+  color: #e50c3b;
+}
+
+.warning {
+  color: orange;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @media all and (-ms-high-contrast: none) {
   *::-ms-backdrop,
   .main .page-content {
