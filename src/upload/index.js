@@ -17,7 +17,6 @@ export default function VideoInput(props) {
     const file = event.target.files[0];
     let data = new FormData()
     data.append("video",file)
-    console.log("file",file)
     let options = {
         url: UPLOAD_VIDEO_URL,
         method: "POST",
@@ -28,7 +27,6 @@ export default function VideoInput(props) {
     }
     setLoader(true)
     axios.request(options).then((data)=>{
-        console.log(data.data)
         setLoader(false)
         navigate("/dashboard")
     }).catch((err)=>{
